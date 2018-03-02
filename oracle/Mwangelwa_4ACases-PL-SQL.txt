@@ -1,0 +1,120 @@
+/*Question 1 A*/
+SET SERVEROUTPUT ON SIZE 20000
+
+DECLARE
+	curr_customer_first VARCHAR2(20) := 'Neal';
+	curr_customer_last VARCHAR2(20) := 'Graham';
+	curr_customer_name VARCHAR(40);
+	curr_order_number NUMBER := 1;
+	curr_order_date DATE := TO_DATE('05/29/06', 'MM/DD/YY');
+BEGIN
+	curr_customer_first := RTRIM(curr_customer_first);
+	curr_customer_last := RTRIM(curr_customer_last);
+	curr_customer_name := curr_customer_first || ' ' || curr_customer_last;
+	--DBMS_OUTPUT.PUT_LINE(curr_customer_name);
+
+	
+END;
+/
+
+/*Question 1 B*/
+SET SERVEROUTPUT ON SIZE 20000
+
+DECLARE
+	curr_customer_first VARCHAR2(20) := 'Neal';
+	curr_customer_last VARCHAR2(20) := 'Graham';
+	curr_customer_name VARCHAR(40);
+	curr_order_number NUMBER := 1;
+	curr_order_date DATE := TO_DATE('05/29/06', 'MM/DD/YY');
+	order_placed VARCHAR(100);
+	
+BEGIN
+	curr_customer_first := RTRIM(curr_customer_first);
+	curr_customer_last := RTRIM(curr_customer_last);
+	curr_customer_name := curr_customer_first || ' ' || curr_customer_last;
+	--DBMS_OUTPUT.PUT_LINE(curr_customer_name);
+		
+	order_placed := 'Order#' || curr_order_number || ' ' || 'was placed on ' || TO_CHAR(curr_order_date, 'MM/DD/YY') || ' by ' || curr_customer_name;
+	DBMS_OUTPUT.PUT_LINE(order_placed);
+
+	
+END;
+/
+
+/*Question 2*/
+SET SERVEROUTPUT ON SIZE 20000
+
+DECLARE
+	curr_customer_first VARCHAR2(20) := 'Neal';
+	curr_customer_last VARCHAR2(20) := 'Graham';
+	curr_address VARCHAR2(20) := '9815 Circle Dr.';
+	curr_city VARCHAR2(20) := 'Tallahassee';
+	curr_state VARCHAR2(2) := 'FL';
+	curr_zip VARCHAR2(10) := '32308';
+	
+	
+BEGIN
+	curr_customer_first := RTRIM(curr_customer_first);
+	curr_customer_last := RTRIM(curr_customer_last);
+		
+	DBMS_OUTPUT.PUT_LINE(curr_customer_first);	
+	DBMS_OUTPUT.PUT_LINE(curr_customer_last);
+	DBMS_OUTPUT.PUT_LINE(curr_address);	
+	DBMS_OUTPUT.PUT_LINE(curr_city);
+	DBMS_OUTPUT.PUT_LINE(curr_state);	
+	DBMS_OUTPUT.PUT_LINE(curr_zip);	
+END;
+/
+
+/*Question 3*/
+SET SERVEROUTPUT ON SIZE 20000
+
+DECLARE
+	curr_phone VARCHAR2(30) := '9045551897';
+	curr_areacode VARCHAR2(30);
+	curr_number VARCHAR2(30);	
+	
+BEGIN
+	curr_areacode := SUBSTR(curr_phone, 1, 3);
+	DBMS_OUTPUT.PUT_LINE('The area code is: ' || 
+	curr_areacode);
+	curr_number := SUBSTR(curr_phone, 4, 7);
+	DBMS_OUTPUT.PUT_LINE('The phone number is: ' ||
+	curr_number);
+END;
+/
+
+/*Question 4*/
+--Author: Jeremy Mwangelwa
+--To display a date in a stated format
+SET SERVEROUTPUT ON SIZE 20000
+
+DECLARE
+	example_date DATE := TO_DATE('01/31/06', 'MM/DD/YY');
+	example VARCHAR2(20);
+	
+BEGIN
+	example := TO_CHAR(example_date, 'Month DD, YYYY');
+	DBMS_OUTPUT.PUT_LINE(example);
+END;
+/
+
+/*Question 5*/
+SET SERVEROUTPUT ON SIZE 20000
+
+DECLARE
+	inventory_ID NUMBER := 5;
+	inventory_color VARCHAR2(10) := 'Sky Blue';
+	inventory_price NUMBER:= 259.99;
+	inventory_QOH NUMBER:= 23;
+	
+BEGIN
+	DBMS_OUTPUT.PUT_LINE('Inventory_ID: ' || inventory_ID);
+	DBMS_OUTPUT.PUT_LINE('Color: ' || inventory_color);
+	DBMS_OUTPUT.PUT_LINE('Price: $' || inventory_price);
+	DBMS_OUTPUT.PUT_LINE('Quantity on Hand: ' || inventory_QOH);
+END;
+/
+
+
+

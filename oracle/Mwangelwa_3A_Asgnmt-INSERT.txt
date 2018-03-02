@@ -1,0 +1,235 @@
+INSERT INTO customer
+VALUES (1, 'Graham','Neal', 'R', TO_DATE('12/10/1967', 'MM/DD/YYYY'), '9815 Circle Dr.','Tallahassee', 'FL', '32308', 
+'9045551897','9045558599', 'grahamn', 'barbiecar');
+
+/*1st row of customer row created */
+
+INSERT INTO customer
+VALUES (2, 'Sanchez','Myra', 'T', TO_DATE('8/14/1958', 'MM/DD/YYYY'), '172 Alto Park','Seattle', 'WA', '42180', 
+'4185551791','4185556643', 'sanchezmt', 'qwert5');
+
+/*2nd row of customer row created */
+
+INSERT INTO customer
+VALUES (3, 'Smith','Lisa', 'M', TO_DATE('4/12/1960', 'MM/DD/YYYY'), '850 East Main','Santa Ana', 'CA', '51875', 
+'3075557841','3075559852', 'smithlm', 'joshua5');
+
+/*3rd row of customer row created */
+
+INSERT INTO customer
+VALUES (4, 'Phelp','Paul', NULL, TO_DATE('1/18/1981', 'MM/DD/YYYY'), '994 Kirkman Rd','Northpoint', 'NY', '11795', 
+'4825554788','4825558219', 'phelpp', 'hold98er');
+
+/*4th row of customer row created */
+
+INSERT INTO customer
+VALUES (5, 'Lewis','Sheila', 'A', TO_DATE('8/30/1978', 'MM/DD/YYYY'), '195 College Blvd.','Newton', 'GA', '37812', 
+'3525554972','3525551811', 'lewissa', '125pass');
+
+/*5th row of customer row created */
+
+INSERT INTO customer
+VALUES (6, 'Thomas','James', 'E', TO_DATE('6/01/1973', 'MM/DD/YYYY'), '348 Rice Lane','Radcliff', 'WY', '87195', 
+'7615553485','7615553319', 'jamest', 'nok$tell');
+
+/*6th row of customer row created */
+
+
+
+CREATE SEQUENCE orders_id_seq
+START WITH 1;
+
+/*Sequence created */
+
+
+
+INSERT INTO order_source
+VALUES (1, 'Winter 2005');
+
+/*1st row of order_source created */
+
+INSERT INTO order_source
+VALUES(2, 'Spring 2006');
+
+/*2nd row of order_source created */
+
+INSERT INTO order_source
+VALUES (3, 'Summer 2006');
+
+/*3rd row of order_source created */
+
+INSERT INTO order_source
+VALUES(4, 'Outdoor 2006');
+
+/*4th row of order_source created */
+
+INSERT INTO order_source
+VALUES(5, 'Children''s 2006');
+
+/*5th row of order_source created */
+
+INSERT INTO order_source
+VALUES(6, 'Web Site');
+
+
+
+/*6th row of order_source created */
+
+INSERT INTO orders VALUES
+(orders_id_seq.NEXTVAL, TO_DATE('5/29/2006', 'MM/DD/YYYY'), 'CC', 1, 2);
+
+/*1st row of orders created */
+
+INSERT INTO orders VALUES
+(orders_id_seq.NEXTVAL, TO_DATE('5/29/2006', 'MM/DD/YYYY'), 'CC', 5, 6);
+
+/*2nd row of orders created */
+
+INSERT INTO orders VALUES
+(orders_id_seq.NEXTVAL, TO_DATE('5/31/2006', 'MM/DD/YYYY'), 'CHECK', 2, 2);
+
+/*3rd row of orders created */
+
+INSERT INTO orders VALUES
+(orders_id_seq.NEXTVAL, TO_DATE('5/31/2006', 'MM/DD/YYYY'), 'CC', 3, 3);
+
+/*4th row of orders created */
+
+INSERT INTO orders VALUES
+(orders_id_seq.NEXTVAL, TO_DATE('6/01/2006', 'MM/DD/YYYY'), 'CC', 4, 6);
+
+/*5th row of orders created */
+
+INSERT INTO orders VALUES
+(orders_id_seq.NEXTVAL, TO_DATE('6/01/2006', 'MM/DD/YYYY'), 'CC', 4, 3);
+
+/*6th row of orders created */
+
+
+
+COMMIT;
+
+/*Data committed */
+
+/* QUESTION 2 */
+
+DELETE FROM customer
+WHERE c_id = 5;
+
+/* Can't delete due to child row found, so delete child row: */
+
+SELECT * FROM orders WHERE c_id = 5;
+
+/*Worked*/
+
+DELETE FROM orders
+WHERE o_id = 3;
+
+/* Child row deleted */
+
+DELETE FROM customer
+WHERE c_id = 5;
+
+/*Row deleted*/
+
+UPDATE orders
+SET o_methpmt = 'MO'
+WHERE o_id = 6;
+
+/* done */
+
+INSERT INTO order_source
+VALUES(7, 'Winter 2006');
+
+/* row created */
+
+ROLLBACK;
+
+/* Rollbck complete */
+/* End of 2 */
+
+/* Start 3 */
+
+CREATE SEQUENCE customer_id_seq
+START WITH 7;
+
+/*Sequence created */
+
+DROP SEQUENCE customer_id_seq;
+
+/* Sequence dropped */
+
+CREATE SEQUENCE customer_id_seq
+START WITH 7
+INCREMENT BY 10;
+
+/*Sequence created */
+
+SELECT * FROM customer;
+
+/*done*/
+
+DROP SEQUENCE customer_id_seq;
+
+/* Sequence dropped */
+
+
+/*QUESTION 4 */
+ALTER TABLE orders
+DISABLE CONSTRAINT orders_c_id_fk;
+
+ALTER TABLE orders
+DISABLE CONSTRAINT orders_os_id_fk;
+
+ALTER TABLE order_line
+DISABLE CONSTRAINT order_line_o_id_fk;
+
+/* Table altered */
+
+DELETE FROM customer
+WHERE c_id = 1;
+
+/*1st row deleted */
+
+DELETE FROM customer
+WHERE c_id = 2;
+
+/*2nd row deleted */
+
+DELETE FROM customer
+WHERE c_id = 3;
+
+/*3rd row deleted*/
+
+DELETE FROM customer
+WHERE c_id = 4;
+
+/*4th row deleted */
+
+DELETE FROM customer
+WHERE c_id = 5;
+
+/*5th row deleted*/
+
+DELETE FROM customer
+WHERE c_id = 6;
+
+/*6th row deleted*/
+
+SELECT * FROM customer;
+
+/* It worked, no rows could be selected */
+
+ROLLBACK;
+
+/*Rollback complete*/
+
+
+
+/* No rows could be selected because you cannot rollback truncation*/
+/*OK, now for the spool */
+
+
+
+
+

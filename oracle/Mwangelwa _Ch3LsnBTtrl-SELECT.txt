@@ -1,0 +1,89 @@
+/* Page 123 */
+
+SELECT s_first, s_mi, s_last
+FROM student;
+
+SELECT *
+FROM location;
+
+/*Page 124*/
+SELECT f_rank
+FROM faculty;
+
+SELECT DISTINCT f_rank
+FROM faculty;
+
+SELECT f_first, f_mi, f_last,f_rank
+FROM faculty
+WHERE f_rank = 'Associate';
+
+SELECT room
+FROM location
+WHERE bldg_code = 'BUS'
+AND capacity >= 40;
+
+SELECT * FROM enrollment
+WHERE grade IS NULL;
+
+SELECT * FROM enrollment
+WHERE grade IS NOT NULL;
+
+SELECT *
+FROM enrollment
+WHERE grade IN ('A','B');
+
+SELECT *
+FROM enrollment
+WHERE grade NOT IN ('A','B');
+
+SELECT *
+FROM term
+WHERE term_desc LIKE '%2006';
+
+SELECT *
+FROM term
+WHERE term_desc LIKE 'Fall%';
+
+SELECT *
+FROM course
+WHERE course_no LIKE '%1__';
+
+SELECT bldg_code, room, capacity
+FROM location
+WHERE capacity >= 40
+ORDER BY capacity;
+
+SELECT bldg_code, room, capacity
+FROM location
+WHERE capacity >= 40
+ORDER BY capacity DESC;
+
+/*I don't like how DESC can be describe or desceding. Not cool.*/
+
+SELECT bldg_code, room, capacity
+FROM location
+ORDER BY bldg_code, room;
+
+SELECT course_no, course_name, credits * 86.95
+FROM course;
+
+SELECT SYSDATE
+FROM DUAL;
+
+SELECT s_id, s_last, SYSDATE - s_dob
+FROM student;
+
+SELECT s_id, s_last, (SYSDATE - s_dob)/365.25
+FROM student;
+
+SELECT s_id, s_last, SYSDATE - time_enrolled
+FROM student;
+
+SELECT s_id, time_enrolled + TO_YMINTERVAL('0-1')
+FROM student;
+
+SELECT c_sec_id, c_sec_duration +
+TO_DSINTERVAL ('0 00:10:00')
+FROM course_section;
+
+/* Continue from Page 137 */

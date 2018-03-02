@@ -1,0 +1,141 @@
+SQL> 
+SQL> 
+SQL> SELECT orders.o_id, item_desc
+  2  FROM orders, inventory, order_line, item
+  3  WHERE orders.o_id = 1
+  4  AND orders.o_id = order_line.o_id
+  5  AND order_line.inv_id = inventory.inv_id
+  6  AND inventory.item_id = item.item_id;
+
+      O_ID ITEM_DESC                                                            
+---------- ------------------------------                                       
+         1 3-Season Tent                                                        
+         1 Women's Fleece Pullover                                              
+
+SQL> 
+SQL> 
+SQL> SELECT orders.o_id, customer.c_id, c_last, c_first, SUM(inv_price * ol_quantity)
+  2  FROM customer, orders, order_line, inventory
+  3  WHERE customer.c_id = orders.c_id
+  4  AND orders.o_id = order_line.o_id
+  5  AND order_line.inv_id = inventory.inv_id
+  6  AND orders.o_id = 1
+  7  GROUP BY orders.o_id, customer.c_id, c_last, c_first;
+
+      O_ID       C_ID C_LAST                                                    
+---------- ---------- ------------------------------                            
+C_FIRST                        SUM(INV_PRICE*OL_QUANTITY)                       
+------------------------------ --------------------------                       
+         1          1 Graham                                                    
+Neal                                               379.89                       
+                                                                                
+
+SQL> 
+SQL> SELECT c_last, c_first, inv_price, ol_quantity
+  2  FROM customer, orders, order_line, inventory, item
+  3  WHERE customer.c_id = orders.c_id
+  4  AND orders.o_id = order_line.o_id
+  5  AND order_line.inv_id = inventory.inv_id
+  6  AND inventory.item_id = item.item_id
+  7  AND item_desc = 'Boy''s Surf Shorts';
+
+no rows selected
+
+SQL> 
+SQL> SELECT ship_id, color, inv_size, item_desc
+  2  FROM shipment_line, inventory, item
+  3  WHERE shipment_line.inv_id = inventory.inv_id
+  4  AND inventory.item_id = item.item_id
+  5  AND sl_date_received IS NULL;
+
+   SHIP_ID COLOR                INV_SIZE   ITEM_DESC                            
+---------- -------------------- ---------- ------------------------------       
+         2 Light Grey                      3-Season Tent                        
+         3 Navy                 M          Women's Hiking Shorts                
+         3 Navy                 S          Women's Hiking Shorts                
+         3 Khaki                L          Women's Hiking Shorts                
+
+SQL> 
+SQL> CREATE OR REPLACE VIEW item_view AS
+  2  SELECT item_desc, inv_price, inv_qoh
+  3  FROM inventory, item
+  4  WHERE inventory.item_id = item.item_id;
+
+View created.
+
+SQL> 
+SQL> SELECT SUM(inv_price * inv_qoh)
+  2  FROM item_view;
+
+SUM(INV_PRICE*INV_QOH)                                                          
+----------------------                                                          
+             126224.29                                                          
+
+SQL> 
+SQL> SELECT shipment.ship_id, ship_date_expected AS ship_expected, sl_quantity, sl_date_received
+  2  FROM shipment, shipment_line
+  3  WHERE shipment.ship_id = shipment_line.ship_id;
+
+   SHIP_ID SHIP_EXPE SL_QUANTITY SL_DATE_R                                      
+---------- --------- ----------- ---------                                      
+         1 15-SEP-06          25 10-SEP-06                                      
+         1 15-SEP-06          25 10-SEP-06                                      
+         2 15-NOV-06          25                                                
+         3 25-JUN-06         200                                                
+         3 25-JUN-06         200                                                
+         3 25-JUN-06         200                                                
+         4 25-JUN-06         100 15-AUG-06                                      
+         4 25-JUN-06         100 25-AUG-06                                      
+         5 15-AUG-06          50 15-AUG-06                                      
+         5 15-AUG-06         100 15-AUG-06                                      
+         5 15-AUG-06         100 15-AUG-06                                      
+
+11 rows selected.
+
+SQL> 
+SQL> SELECT customer.c_id, c_last, c_first
+  2  FROM customer, orders, order_line, inventory, item
+  3  WHERE customer.c_id = orders.c_id
+  4  AND orders.o_id = order_line.o_id
+  5  AND order_line.inv_id = inventory.inv_id
+  6  AND inventory.item_id = item.item_id
+  7  AND customer.c_id <> 3
+  8  AND item_desc = (SELECT item_desc
+  9  		FROM customer, orders, order_line, inventory, item
+ 10  		WHERE customer.c_id = orders.c_id
+ 11  		AND orders.o_id = order_line.o_id
+ 12  		AND order_line.inv_id = inventory.inv_id
+ 13  		AND inventory.item_id = item.item_id
+ 14  		AND customer.c_id = 3);
+
+      C_ID C_LAST                         C_FIRST                               
+---------- ------------------------------ ------------------------------        
+         1 Graham                         Neal                                  
+         4 Phelp                          Paul                                  
+
+SQL> 
+SQL> SELECT item_desc, orders.o_id, SUM(inv_price * ol_quantity)
+  2  FROM orders, order_line, inventory, item, category
+  3  WHERE orders.o_id = order_line.o_id
+  4  AND order_line.inv_id = inventory.inv_id
+  5  AND inventory.item_id = item.item_id
+  6  AND item.cat_id = category.cat_id
+  7  AND item_desc = 'Outdoor Gear'
+  8  GROUP BY item_desc, orders.o_id;
+
+no rows selected
+
+SQL> 
+SQL> SELECT SUM(inv_price * ol_quantity)
+  2  FROM order_source, orders, order_line, inventory
+  3  WHERE order_source.os_id = orders.os_id
+  4  AND orders.o_id = order_line.o_id
+  5  AND order_line.inv_id = inventory.inv_id
+  6  AND order_source.os_desc = 'Web Site';
+
+SUM(INV_PRICE*OL_QUANTITY)                                                      
+--------------------------                                                      
+                    105.89                                                      
+
+SQL> 
+SQL> spool off;

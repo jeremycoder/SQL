@@ -1,0 +1,25 @@
+/*Page 188 */
+
+
+/*Question 1*/
+SELECT orders.o_id, item_desc
+FROM orders, inventory, order_line, item
+WHERE orders.o_id = 1
+AND orders.o_id = order_line.o_id
+AND order_line.inv_id = inventory.inv_id
+AND inventory.item_id = item.item_id;
+
+/*Question 2*/
+SELECT orders.o_id, customer.c_id, c_last, c_first, SUM(inv_price * ol_quantity
+FROM customer, orders, order_line, inventory
+WHERE orders.o_id = 1
+AND customer.c_id = orders.c_id
+AND orders.o_id = order_line.o_id
+AND order_line.inv_id = inventory.inv_id;
+/*GROUP BY orders.o_id;
+/*Why isn't this working? */
+
+/*Question 3*/
+
+
+

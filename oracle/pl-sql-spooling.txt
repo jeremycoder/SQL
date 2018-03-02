@@ -1,0 +1,40 @@
+SQL> /* Mwangelwa Mwangelwa (Jeremy) */
+SQL> 
+SQL> CREATE TABLE q2_department
+  2  (department_number NUMBER (5),
+  3  department_name VARCHAR2 (30),
+  4  CONSTRAINT q2_dept_department_number_pk PRIMARY KEY (department_number));
+
+Table created.
+
+SQL> 
+SQL> DESC q2_department
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DEPARTMENT_NUMBER                         NOT NULL NUMBER(5)
+ DEPARTMENT_NAME                                    VARCHAR2(30)
+
+SQL> 
+SQL> CREATE TABLE q2_employee
+  2  (employee_id NUMBER (5),
+  3  last_name VARCHAR2 (30),
+  4  first_name VARCHAR2 (30),
+  5  department_number NUMBER (5),
+  6  manager_id NUMBER (5),
+  7  CONSTRAINT q2_employee_employee_id_pk PRIMARY KEY (employee_id),
+  8  CONSTRAINT q2_emp_department_number_fk FOREIGN KEY (department_number) REFERENCES q2_department (department_number));
+
+Table created.
+
+SQL> 
+SQL> DESC q2_employee
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EMPLOYEE_ID                               NOT NULL NUMBER(5)
+ LAST_NAME                                          VARCHAR2(30)
+ FIRST_NAME                                         VARCHAR2(30)
+ DEPARTMENT_NUMBER                                  NUMBER(5)
+ MANAGER_ID                                         NUMBER(5)
+
+SQL> 
+SQL> spool off

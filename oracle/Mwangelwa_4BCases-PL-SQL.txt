@@ -1,0 +1,112 @@
+/*Question 1*/
+SET SERVEROUTPUT ON SIZE 20000
+DECLARE
+	CURSOR customer_cursor IS
+		SELECT c_first, c_last, c_address, c_city, c_state, c_zip, c_dphone
+		FROM customer;
+		
+		
+	cust_first			customer.c_first%TYPE;
+	cust_last			customer.c_last%TYPE;	
+	cust_address		customer.c_address%TYPE;
+	cust_dphone			customer.c_dphone%TYPE;
+	cust_city			customer.c_city%TYPE;
+	cust_state			customer.c_state%TYPE;
+	cust_zip			customer.c_zip%TYPE;
+	
+BEGIN
+	--SELECT c_first, c_last, c_address, c_dphone
+	OPEN customer_cursor;
+	DBMS_OUTPUT.PUT_LINE('Clearwater Traders Mailing List.');
+	LOOP
+		FETCH customer_cursor
+		INTO cust_first, cust_last, cust_address, cust_city, cust_state, cust_zip, cust_dphone;
+		EXIT WHEN customer_cursor%NOTFOUND;		
+		DBMS_OUTPUT.PUT_LINE(cust_first || ' 	' || cust_last || '	 ' || cust_address || '   ' || cust_city || '       '
+		|| cust_state || '	 ' || cust_zip || ' 	'|| cust_dphone);
+	END LOOP;
+	CLOSE customer_cursor;
+END;
+/
+
+/*Question 2 - NOT COMPLETED YET*/
+SET SERVEROUTPUT ON SIZE 20000
+DECLARE
+	CURSOR customer_cursor IS
+		SELECT customer.c_first, customer.c_last, SUM(order_line.ol_quantity * inventory.inv_price)
+		FROM customer, orders, order_line, inventory
+		WHERE customer.c_id = orders.c_id
+		AND orders.o_id = order_line.o_id
+		AND order_line.inv_id = inventory.inv_id
+		GROUP BY customer.c_first, customer.c_last;
+		
+	cust_first			customer.c_first%TYPE;
+	cust_last			customer.c_last%TYPE;
+	order_total		inventory.inv_price%TYPE;
+	grand_total		inventory.inv_price%TYPE;
+	
+	
+	
+BEGIN
+	OPEN customer_cursor;
+	DBMS_OUTPUT.PUT_LINE('Amounts Owed');
+	LOOP
+		FETCH customer_cursor
+		INTO cust_first, cust_last, order_total;
+		EXIT WHEN customer_cursor%NOTFOUND;		
+		DBMS_OUTPUT.PUT_LINE(cust_first || ' 	' || cust_last || '	 $' || order_total);
+		--grand_total = grand_total + order_total;
+	END LOOP;
+	CLOSE customer_cursor;
+END;
+/
+
+/*Question 3 - NOT COMPLETED YET*/
+SET SERVEROUTPUT ON SIZE 20000
+DECLARE
+	CURSOR customer_cursor IS
+		SELECT c_first, c_last
+		FROM customer;		
+		
+	cust_first			customer.c_first%TYPE;
+	cust_last			customer.c_last%TYPE;	
+	
+	
+BEGIN
+	OPEN customer_cursor;
+	DBMS_OUTPUT.PUT_LINE('Amounts Owed');
+	LOOP
+		FETCH customer_cursor
+		INTO cust_first, cust_last, cust_address, cust_city, cust_state, cust_zip, cust_dphone;
+		EXIT WHEN customer_cursor%NOTFOUND;		
+		DBMS_OUTPUT.PUT_LINE(cust_first || ' 	' || cust_last || '	 ' || cust_address || '   ' || cust_city || '       '
+		|| cust_state || '	 ' || cust_zip || ' 	'|| cust_dphone);
+	END LOOP;
+	CLOSE customer_cursor;
+END;
+/
+
+/*Question 4 - NOT COMPLETED YET*/
+SET SERVEROUTPUT ON SIZE 20000
+DECLARE
+	CURSOR customer_cursor IS
+		SELECT c_first, c_last
+		FROM customer;		
+		
+	cust_first			customer.c_first%TYPE;
+	cust_last			customer.c_last%TYPE;	
+	
+	
+BEGIN
+	OPEN customer_cursor;
+	DBMS_OUTPUT.PUT_LINE('Amounts Owed');
+	LOOP
+		FETCH customer_cursor
+		INTO cust_first, cust_last, cust_address, cust_city, cust_state, cust_zip, cust_dphone;
+		EXIT WHEN customer_cursor%NOTFOUND;		
+		DBMS_OUTPUT.PUT_LINE(cust_first || ' 	' || cust_last || '	 ' || cust_address || '   ' || cust_city || '       '
+		|| cust_state || '	 ' || cust_zip || ' 	'|| cust_dphone);
+	END LOOP;
+	CLOSE customer_cursor;
+END;
+/

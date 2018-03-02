@@ -1,0 +1,104 @@
+/*#1*/
+SELECT item_id, inv_price, color
+FROM inventory
+WHERE inv_id = 1;
+
+/*2*/
+SELECT c_id, c_first, c_mi, c_last
+FROM customer
+WHERE 
+c_birthdate >= TO_DATE('JAN-01-1970', 'MON-DD-YYYY')
+AND
+c_birthdate <= TO_DATE('DEC-31-1979', 'MON-DD-YYYY');
+
+/*3*/
+SELECT COUNT(cat_desc) AS total_number_of_categories
+FROM category;
+
+/*4*/
+SELECT COUNT(*) AS shipments_not_received
+FROM shipment_line
+WHERE sl_date_received IS NULL;
+
+/*5*/
+SELECT item_id, SUM(inv_qoh) AS total
+FROM inventory
+GROUP BY item_id
+ORDER BY item_id; 
+
+/*6*/
+SELECT COUNT(*) AS orders_received_May_29_2006
+FROM shipment_line 
+WHERE sl_date_received = TO_DATE('May 29, 2006','Month DD, YYYY');
+
+/*7*/
+SELECT COUNT(o_id) AS credit_orders_05_31_06
+FROM orders
+WHERE o_date = TO_DATE('05-31-2006','MM-DD-YYYY') AND o_methpmt = 'CC';
+
+/*8*/
+SELECT c_first AS first_name, c_last AS last_name, c_state AS lives_in
+FROM customer
+WHERE c_state IN ('FL','GA');
+
+/*9*/
+SELECT *
+FROM inventory
+WHERE inv_size IS NULL;
+
+/*10*/
+SELECT *
+FROM shipment
+WHERE ship_date_expected < TO_DATE('09-01-2006','MM-DD-YYYY');
+
+/*11*/
+SELECT COUNT(item_id) AS items_over_$60_in_L_or_XL
+FROM inventory
+WHERE inv_price > 60 AND inv_size IN ('L','XL');
+
+/*12*/
+SELECT COUNT (DISTINCT color) AS diff_colors_of_item_5
+FROM inventory
+WHERE item_id = 5;
+
+/*13*/
+SELECT COUNT (DISTINCT inv_size) AS diff_sizes_of_item_5
+FROM inventory
+WHERE item_id = 5;
+
+/*14*/
+SELECT c_first AS first_name, c_last AS last_name, TRUNC((SYSDATE - c_birthdate)/365.25) AS age
+FROM customer;
+
+/*15*/
+SELECT TO_CHAR(ship_date_expected, 'MONTH DD,YYYY') AS ship_date
+FROM shipment;
+
+/*16*/
+SELECT os_id, COUNT (os_id) AS orders_received
+FROM orders
+GROUP BY os_id
+ORDER BY os_id;
+
+
+/*17*/
+SELECT * 
+FROM inventory
+WHERE inv_qoh > 0 AND inv_size IN ('M','L') AND color IN ('Royal','Bright Pink','Spruce');
+
+/*18*/
+SELECT DISTINCT item_id, COUNT(color) AS number_colors_available
+FROM inventory
+GROUP BY item_id
+ORDER BY item_id;
+
+
+/*19*/
+SELECT COUNT(item_id) AS num_of_items_not_in_cat_2_or_4
+FROM item
+WHERE cat_id NOT IN (2, 4);
+
+/*20*/
+SELECT DISTINCT item_id, TO_CHAR(inv_price,'$999.99') AS price
+FROM inventory;
+

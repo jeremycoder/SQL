@@ -1,0 +1,61 @@
+/*Page 199*/
+SET SERVEROUTPUT ON SIZE 4000
+
+/*Page 200*/
+--PL/SQL program to display the current date
+DECLARE
+	todays_date DATE;
+BEGIN
+	todays_date := SYSDATE;
+	DBMS_OUTPUT.PUT_LINE('Today''s date is ');
+	DBMS_OUTPUT.PUT_LINE(todays_date);
+END;
+/
+
+/*Page 203*/
+--PL/SQL program to display the current date
+DECLARE
+	todays_date DATE;
+BEGIN
+	todays_date := SYSDATE;
+	DBMS_OUTPUT.PUT_LINE('Today''s date is ' || TO_CHAR(todays_date));
+END;
+/
+
+/*Page 205*/
+--PL/SQL program to display the current date
+DECLARE
+	todays_date					DATE;
+	current_day					VARCHAR2(9);
+	current_day_length			BINARY_INTEGER;
+BEGIN
+	todays_date := SYSDATE;
+		--extract day portion from current date, and trim trailing blank spaces
+	current_day := TO_CHAR(todays_date, 'DAY');
+	current_day	:= RTRIM(current_day);
+		--convert day to mixed case letters with initial letter capitalized
+	current_day := INITCAP(current_day);
+		--determine length of day's character string
+	current_day_length	:= LENGTH(current_day);	
+	DBMS_OUTPUT.PUT_LINE('Today''s date is '|| current_day || ', ' || TO_CHAR(todays_date));
+	DBMS_OUTPUT.PUT_LINE('The length of the word ' || current_day || ' is ' ||
+		TO_CHAR(current_day_length) || ' characters.');
+END;
+/
+
+/*Page 207*/
+--PL/SQL program to display the current date
+DECLARE
+	curr_course_no		VARCHAR2(30) := 'MIS 101';
+	blank_space			NUMBER(2);
+	curr_dept			VARCHAR2(30);
+	curr_number			VARCHAR2(30);
+BEGIN
+	blank_space	:= INSTR(curr_course_no, ' ');
+	curr_dept := SUBSTR(curr_course_no, 1, (blank_space - 1));
+	DBMS_OUTPUT.PUT_LINE('Department is: ' || curr_dept);
+	curr_number := SUBSTR(curr_course_no, (blank_space + 1), (LENGTH(curr_course_no) - blank_space));
+	DBMS_OUTPUT.PUT_LINE('Course Number is: ' || curr_number);	
+END;
+/
+

@@ -1,0 +1,36 @@
+DECLARE	
+	cursor my_cursor is
+		SELECT
+		
+		FROM	;
+		
+		variable_declaration1 varchar2(30);
+		variable_declaration2 varchar2(30);
+		
+		BEGIN
+			OPEN my_cursor;
+				DBMS_OUTPUT.PUT_LINE('Headings');
+			LOOP
+				FETCH
+					my_cursor
+				INTO
+					Variable_declarations;
+				EXIT WHEN my_cursor%NOTFOUND;
+				OUTPUT_LINE := variable_declaratio1 || ' ' || variable_declaration2;
+				
+				IF
+				THEN
+				ELSIF
+				THEN
+				END IF
+				
+				DBMS_OUTPUT.PUT_LINE(OUTPUT_LINE);
+			END LOOP
+		
+		close my_cursor;
+		
+		DBMS_OUTPUT.PUT_LINE(optional_end_lines);
+		
+		END;
+		
+			
